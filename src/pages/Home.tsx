@@ -1,4 +1,5 @@
-import RecipeItem from "@/components/RecipeItem";
+import BaseLayout from "@/components/common/BaseLayout";
+import Navbar from "@/components/common/Navbar";
 
 const recipeItemMock = {
   imgSrc: "https://via.placeholder.com/150",
@@ -12,10 +13,12 @@ const recipeItemMock = {
 
 const Home = () => {
   return (
-    <div>
-      <h1></h1>
-      <RecipeItem {...recipeItemMock} />
-    </div>
+    <BaseLayout>
+      <header>
+        <Navbar />
+      </header>
+      {/* <RecipeItem {...recipeItemMock} /> */}
+    </BaseLayout>
   );
 };
 

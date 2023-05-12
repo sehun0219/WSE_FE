@@ -1,4 +1,4 @@
-import UserInfo from "@/components/UserInfo";
+import UserInfo from "@/components/common/UserInfo";
 import {
   RecipeItemContainer,
   RecipeThumbnail,
