@@ -1,11 +1,11 @@
 import SignLayout from "@/components/common/SignLayout";
-import SignupForm from "@/components/features/SignupForm";
+import SignUpForm from "@/components/features/SignUpForm";
 // SignUp.js
 
 const SignUp = () => {
   return (
     <SignLayout>
-      <SignupForm />
+      <SignUpForm />
     </SignLayout>
   );
 };

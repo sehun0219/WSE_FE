@@ -27,8 +27,3 @@ export const SubmitButton = styled.button`
     background-color: #0056b3;
   }
 `;
-
-export const PasswordHint = styled.p`
-  color: #0056b3;
-  font-size: 8px;
-`;
