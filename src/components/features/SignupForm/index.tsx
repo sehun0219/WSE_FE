@@ -3,11 +3,7 @@ import { FormContainer, FormTitle, SubmitButton, PasswordHint } from "./styled";
 import FormInput from "@/components/common/FormInput";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// signUp interface
-interface SignUpData {
-  name: string;
-  password: string;
-}
+import { SignUpData } from "@/interface/user";
 
 // http://localhost:8080/user/sing-up
 const SignUpForm = () => {
@@ -15,8 +11,14 @@ const SignUpForm = () => {
   const navigate = useNavigate();
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const passWordHint = `Your password should be at least 8 characters long and include a combination of letters, numbers, and special characters.`;
+
+  const handleEmail = (e: ChangeEvent<HTMLInputElement>) => {
+    const email = e.target.value;
+    setEmail(email);
+  };
 
   // 비번 유효성검사
   const isValidPassword = (password: string): boolean => {
@@ -40,6 +42,7 @@ const SignUpForm = () => {
     const signUpData: SignUpData = {
       name,
       password,
+      email,
     };
     try {
       const response = await axios.post(
@@ -47,15 +50,20 @@ const SignUpForm = () => {
         signUpData
       );
       console.log(response.data);
-      // 추가적인 작업: 응답 처리, 로그인 페이지로 리디렉션 등
+
+      // 추가적인 작업: 응답 처리, 로그인 페이지로 리디렉션
       if (response.status === 200) {
-        alert(`Welcome to WES, ${name}`);
+        alert(`Sign-up successful, Welcome ${name}`);
+        // 기본적으로 백앤드에서 뭔가를 받아서 로컬스토리지에 저장한다음 그정보를 브라우저가 갖고있게해줘야함
+        // 백엔드에서 오는 데이터는 response 가 되고 그 안에 데이터가 있음
+        // 그 데이터는 제이슨으로 받아지고 스트링으로 저장해서 로컬스토리지에 저장되어야함
+        // 여기서 data를 set하고 홈으로가서 get함.
+        window.localStorage.setItem("userInfo", JSON.stringify(response.data));
         navigate("/");
-        // 사인업 버튼대신  Welcome ${사용자이름} , Log out 이 표시 되어야 함.
-        localStorage.setItem("token", response.data.token);
       }
     } catch (error) {
       alert(`Please check your name and password`);
+      console.log("err", error);
     }
   };
 
@@ -67,6 +75,13 @@ const SignUpForm = () => {
         type="text"
         placeholder="Name"
         onChange={handleChangeName}
+      />
+
+      <FormInput
+        value={email}
+        type="text"
+        placeholder="Email"
+        onChange={handleEmail}
       />
       <FormInput
         value={password}

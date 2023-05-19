@@ -14,44 +14,10 @@ const recipeItemMock = {
 };
 
 const Home = () => {
-  // /ping api 호출
-  // 1. ping을 서버주소에 요청한다.
-  // const [user, setUser] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchPong = async () => {
-  //     try {
-  //       const response = await fetch("http://localhost:8080/ping");
-  //       const data = await response.json();
-  //       setUser(data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   fetchPong();
-  // }, []);
-
-  // axios 활용
-  // const getPong = axios
-  //   .get("http://localhost:8080/ping")
-  //   .then((response) => {
-  //     console.log(response);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-  // console.log(getPong);
-
-  // const getPong = async (req: Request, res: Response) => {
-  //   try {
-  //     const response = await axios.get("http://localhost:8081/ping");
-  //     console.log(response);
-  //     return response;
-  //   } catch (err) {
-  //     return res.status(400).send("error");
-  //   }
-  // };
-  // getPong("ping", "pong");
+  const userInfo = window.localStorage.getItem("userInfo");
+  if (userInfo) {
+    console.log(JSON.parse(userInfo));
+  }
 
   return (
     <BaseLayout>

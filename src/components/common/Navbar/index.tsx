@@ -1,45 +1,59 @@
-import styled from "styled-components";
+import {
+  NavbarLogo,
+  NavbarContainer,
+  ButtonWrap,
+  LoginButton,
+  LogoutButton,
+} from "./styled";
 import { Link } from "react-router-dom";
-
-const NavbarContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1em;
-  background-color: #282c34;
-`;
-
-const NavbarLogo = styled.div`
-  color: #61dafb;
-  font-size: 1.5em;
-`;
-const ButtonWrap = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 16px;
-`;
-
-const LoginButton = styled(Link)`
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #61dafb;
-  color: #282c34;
-  font-size: 1em;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #21a1c1;
-  }
-`;
+import { useState, useEffect } from "react";
+import { User } from "@/interface/user";
 
 const Navbar = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const [userToken, setUserToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const userInfo = window.localStorage.getItem("userInfo");
+    const token = window.localStorage.getItem("token");
+
+    if (userInfo) {
+      setUser(JSON.parse(userInfo) as User);
+    }
+
+    if (token) {
+      setUserToken(token);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    window.localStorage.removeItem("token");
+    window.localStorage.removeItem("userInfo");
+    setUser(null);
+    setUserToken(null);
+  };
+
   return (
     <NavbarContainer>
       <NavbarLogo>What should I eat</NavbarLogo>
       <ButtonWrap>
-        <LoginButton to="/sign-up">sign up</LoginButton>
-        <LoginButton to="/login">Login</LoginButton>
+        {!user?.name && !userToken && (
+          <>
+            <LoginButton to="/sign-up">Sign up</LoginButton>
+            <LoginButton to="/login">Login</LoginButton>
+          </>
+        )}
+        {user?.name && userToken && (
+          <>
+            <NavbarLogo>
+              Hello! {user.name}{" "}
+              <NavbarLogo>
+                <Link to="/profile">My Profile</Link>
+              </NavbarLogo>
+              <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+            </NavbarLogo>
+          </>
+        )}
       </ButtonWrap>
     </NavbarContainer>
   );

@@ -27,3 +27,16 @@ export const SubmitButton = styled.button`
     background-color: #0056b3;
   }
 `;
+export const CheckboxContainer = styled.div`
+  margin: 5px 0;
+`;
+
+export const CheckboxLabel = styled.label`
+  margin-left: 2px;
+  font-size: 16px;
+`;
+
+export const FindLoginInfo = styled.label`
+  margin-left: 2px;
+  font-size: 12px;
+`;
