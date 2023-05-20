@@ -7,7 +7,6 @@ import { SignUpData } from "@/interface/user";
 
 // http://localhost:8080/user/sing-up
 const SignUpForm = () => {
-  // use state : 컴포넌트 랜더링에 관여, 업데이트할 항목이 생기면 랜더링이 일어남
   const navigate = useNavigate();
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -66,7 +65,6 @@ const SignUpForm = () => {
       console.log("err", error);
     }
   };
-
   return (
     <FormContainer onSubmit={handleSubmit}>
       <FormTitle>Sign Up</FormTitle>

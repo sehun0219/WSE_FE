@@ -59,7 +59,7 @@
 
 // 9. 쿠키/세션 또는 jwt 등을 이용한 로그인 유지
 
-import { useState, FormEvent } from "react";
+import { useLoginForm } from "./useLoginForm";
 import {
   FormContainer,
   FormTitle,
@@ -69,46 +69,20 @@ import {
   FindLoginInfo,
 } from "./styled";
 import FormInput from "@/components/common/FormInput";
-import { LoginData } from "@/interface/user";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 // http://localhost:8080/user/login
+
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate(); // react Router 에서 제공하는 hook 히스토리 객체에 접근, 반환할수있음
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const loginData: LoginData = {
-      email,
-      password,
-    };
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/user/login",
-        loginData
-      );
-      if (response.status === 200) {
-        alert("Login successful");
-        const { token, user } = response.data;
-        localStorage.setItem("token", token);
-        localStorage.setItem("userInfo", JSON.stringify(user));
-        navigate("/");
-      }
-    } catch (e) {
-      alert(`Please check your name and password`);
-      console.error(e);
-    }
-  };
-  const links = [
-    { text: "이메일 찾기", href: "" },
-    { text: "비밀번호 찾기", href: "" },
-    { text: "회원가입", href: "" },
-  ];
-
+  const {
+    handleSubmit,
+    email,
+    setEmail,
+    password,
+    showPassword,
+    setPassword,
+    setShowPassword,
+    links,
+  } = useLoginForm();
   return (
     <FormContainer onSubmit={handleSubmit}>
       <FormTitle>Login</FormTitle>
