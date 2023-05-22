@@ -13,7 +13,7 @@ export const useLoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate(); // react Router 에서 제공하는 hook 히스토리 객체에 접근, 반환할수있음
+  const navigate = useNavigate();
   const userContext = useContext(UserContext);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

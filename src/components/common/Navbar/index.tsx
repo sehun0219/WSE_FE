@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import {
   NavbarLogo,
   NavbarContainer,
@@ -6,52 +7,37 @@ import {
   LogoutButton,
 } from "./styled";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { User } from "@/interface/user";
+import { UserContext } from "@/store/UserContext";
 
 const Navbar = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [userToken, setUserToken] = useState<string | null>(null);
+  const userContext = useContext(UserContext);
 
-  useEffect(() => {
-    const userInfo = window.localStorage.getItem("userInfo");
-    const token = window.localStorage.getItem("token");
-
-    if (userInfo) {
-      setUser(JSON.parse(userInfo) as User);
-    }
-
-    if (token) {
-      setUserToken(token);
-    }
-  }, []);
+  if (!userContext) {
+    return <div>Loading...</div>;
+  }
+  const { user, token, logout } = userContext;
 
   const handleLogout = () => {
-    window.localStorage.removeItem("token");
-    window.localStorage.removeItem("userInfo");
-    setUser(null);
-    setUserToken(null);
+    logout();
   };
 
   return (
     <NavbarContainer>
       <NavbarLogo>What should I eat</NavbarLogo>
+
       <ButtonWrap>
-        {!user?.name && !userToken && (
+        {!user?.name && !token && (
           <>
             <LoginButton to="/sign-up">Sign up</LoginButton>
             <LoginButton to="/login">Login</LoginButton>
           </>
         )}
-        {user?.name && userToken && (
+        {user?.name && token && (
           <>
-            <NavbarLogo>
-              Hello! {user.name}{" "}
-              <NavbarLogo>
-                <Link to="/profile">My Profile</Link>
-              </NavbarLogo>
-              <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
-            </NavbarLogo>
+            <NavbarLogo>Hello! {user.name} </NavbarLogo>
+            <Link to="/profile">My Profile</Link>
+            <Link to="/user-info">User Info</Link>
+            <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
           </>
         )}
       </ButtonWrap>

@@ -2,7 +2,7 @@ import SignLayout from "@/components/common/SignLayout";
 import LoginForm from "@/components/features/LoginForm";
 // LoginUp.js
 
-const LoginIn = () => {
+const Login = () => {
   return (
     <SignLayout>
       <LoginForm />
@@ -10,4 +10,4 @@ const LoginIn = () => {
   );
 };
 
-export default LoginIn;
+export default Login;
